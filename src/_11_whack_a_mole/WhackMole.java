@@ -55,11 +55,14 @@ public void actionPerformed(ActionEvent e) {
 		speak("you missed!");
 		frame.remove(panel);
 		panel=new JPanel();
+		frame.add(panel);
         wm.drawButtons();
 		}
 		if(missed==2) {
 			speak("do better next time!");
-			frame.dispose();
+			frame.remove(panel);
+			panel=new JPanel();
+			frame.add(panel);
 			wm.drawButtons();
 		}
 		if(missed==3) {
