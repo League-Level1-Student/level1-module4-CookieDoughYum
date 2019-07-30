@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 public class WhackMole implements ActionListener{
 	JFrame frame=new JFrame();
 	JPanel panel=new JPanel();
+	JButton ranButton = new JButton();
 	int molesWhacked=0;
 	int missed=0;
 	static WhackMole wm = new WhackMole();
@@ -31,11 +32,16 @@ void GUI() {
 void drawButtons() {
 	ra = new Random().nextInt(23);
 	for(int i=0; i<24; i++) {
-		JButton button=new JButton();
-		panel.add(button);
-		button.addActionListener(this);
 		if(ra==i) {
-			button.setText("mole!");
+			ranButton=new JButton();
+			panel.add(ranButton);
+			ranButton.addActionListener(this);
+			ranButton.setText("mole!");
+		}
+		else {
+				JButton button=new JButton();
+				panel.add(button);
+				button.addActionListener(this);	
 		}
 	}
 }
@@ -49,7 +55,7 @@ public void actionPerformed(ActionEvent e) {
 	if(molesWhacked==10) {
 		endGame(timeAtStart, 10);
 	}
-	if(!e.getSource().equals(ra)) {
+	if(!e.getSource().equals(ranButton)) {
 		missed+=1;
 		if(missed==1) {
 		speak("you missed!");
@@ -67,12 +73,16 @@ public void actionPerformed(ActionEvent e) {
 		}
 		if(missed==3) {
 			speak("I can't believe you missed again!");
-			frame.dispose();
+			frame.remove(panel);
+			panel=new JPanel();
+			frame.add(panel);
 			wm.drawButtons();
 		}
 		if(missed==4) {
 			speak("Too bad you keep missing");
-			frame.dispose();
+			frame.remove(panel);
+			panel=new JPanel();
+			frame.add(panel);
 			wm.drawButtons();
 		}
 		if(missed==5) {
@@ -82,7 +92,7 @@ public void actionPerformed(ActionEvent e) {
 			wm.drawButtons();
 		}
 	}
-	else if(e.getSource().equals(ra)) {
+	else if(e.getSource().equals(ranButton)) {
 		playSound("nail.wav");
 		frame.dispose();
 		GUI();
