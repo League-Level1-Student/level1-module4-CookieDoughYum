@@ -27,7 +27,6 @@ public class slotmachine implements ActionListener{
 	JLabel slot3=new JLabel();
 public static void main(String[] args) {
 	sm.GUI();
-	sm.spinMachine();
 }
 
 void GUI(){
@@ -38,10 +37,20 @@ button.addActionListener(this);
 frame.pack();
 }
 
+void Remove() {
+	frame.remove(panel);
+	panel=new JPanel();
+	frame.add(panel);
+	panel.add(button);
+	panel.remove(slot1);
+    panel.remove(slot2);
+	panel.remove(slot3);
+	button.removeActionListener(this);;
+}
 void spinMachine() {
-	reel1=new Random().nextInt(4);
-	reel2=new Random().nextInt(4);
-	reel3=new Random().nextInt(4);
+	reel1=new Random().nextInt(3)+1;
+	reel2=new Random().nextInt(3)+1;
+	reel3=new Random().nextInt(3)+1;
 }
 
 private JLabel createLabelImage(String fileName) throws MalformedURLException{
@@ -58,10 +67,9 @@ return imageLabel;
 @Override
 public void actionPerformed(ActionEvent e) {
 	// TODO Auto-generated method stub
-	frame.remove(panel);
-	panel=new JPanel();
-	frame.add(panel);
-	panel.add(button);
+	Remove();
+	GUI();
+	sm.spinMachine();
 	if(reel1==1) {
 		try {
 			slot1=createLabelImage("funnelcake.jpg");
@@ -134,19 +142,17 @@ public void actionPerformed(ActionEvent e) {
 			e1.printStackTrace();
 		}
 	}
-	if(reel1==1 && reel2==1 && reel3==1) {
-		JOptionPane.showMessageDialog(null, "You win!");
-	}
-	else if(reel1==2 && reel2==2 && reel3==2) {
-		JOptionPane.showMessageDialog(null, "You win!");
-	}
-	else if(reel1==3 && reel2==3 && reel3==3) {
+	if(reel1==reel2 && reel2==reel3) {
 		JOptionPane.showMessageDialog(null, "You win!");
 	}
 	panel.add(slot1);
 	panel.add(slot2);
 	panel.add(slot3);
 	frame.pack();
+	System.out.println(reel1);
+	System.out.println(reel2);
+	System.out.println(reel3);
+	System.out.println("-");
 }
 
 }
